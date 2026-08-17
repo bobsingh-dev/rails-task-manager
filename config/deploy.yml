@@ -10,7 +10,7 @@ servers:
 
 proxy:
   ssl: true
-  host: ruby.bobtheaibuilder.com
+  host: ruby.bobtheaibuilder.ca
 
 registry:
   server: localhost:5555

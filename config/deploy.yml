@@ -1,0 +1,43 @@
+service: my_app
+
+image: my_app
+
+deploy_timeout: 60
+
+servers:
+  web:
+    - 178.156.229.98
+
+proxy:
+  ssl: true
+  host: ruby.bobtheaibuilder.com
+
+registry:
+  server: localhost:5555
+
+builder:
+  arch: amd64
+
+env:
+  clear:
+    POSTGRES_HOST: my_app-db
+
+  secret:
+    - RAILS_MASTER_KEY
+    - POSTGRES_PASSWORD
+
+accessories:
+  db:
+    image: postgres:17
+    host: 178.156.229.98
+
+    env:
+      clear:
+        POSTGRES_USER: my_app
+        POSTGRES_DB: my_app_production
+
+      secret:
+        - POSTGRES_PASSWORD
+
+    directories:
+      - my_app_postgres:/var/lib/postgresql/data

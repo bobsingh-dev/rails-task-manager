@@ -1,0 +1,28 @@
+<%= form_with model: task, class: "space-y-6" do |form| %>
+  <% if task.errors.any? %>
+    <div class="rounded-xl bg-red-50 p-4 text-sm text-red-700">
+      <%= task.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title,
+      class: "mb-2 block text-sm font-semibold text-slate-700" %>
+
+    <%= form.text_field :title,
+      placeholder: "What needs to be done?",
+      autofocus: true,
+      class: "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" %>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= form.submit(
+      task.persisted? ? "Save Changes" : "Create Task",
+      class: "cursor-pointer rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+    ) %>
+
+    <%= link_to "Cancel",
+      root_path,
+      class: "rounded-xl px-5 py-3 font-semibold text-slate-600 hover:bg-slate-100" %>
+  </div>
+<% end %>

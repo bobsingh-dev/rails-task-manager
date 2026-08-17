@@ -1,0 +1,113 @@
+<div class="min-h-screen bg-slate-100 px-6 py-12">
+  <div class="mx-auto max-w-3xl">
+
+    <div class="mb-8 flex items-end justify-between gap-6">
+      <div>
+        <p class="mb-2 text-sm font-bold uppercase tracking-widest text-purple-600">
+          My App
+        </p>
+
+        <h1 class="text-4xl font-bold tracking-tight text-slate-900">
+          Task Manager
+        </h1>
+
+        <p class="mt-2 text-slate-500">
+          Keep track of what needs to get done.
+        </p>
+      </div>
+
+      <%= link_to "New Task",
+        new_task_path,
+        class: "shrink-0 rounded-xl bg-purple-600 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-purple-700" %>
+    </div>
+
+    <% if notice.present? %>
+      <div class="mb-6 rounded-xl bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <% if @tasks.any? %>
+
+        <div class="divide-y divide-slate-100">
+          <% @tasks.each do |task| %>
+
+            <div class="flex items-center justify-between gap-4 p-5">
+
+              <div class="flex min-w-0 items-center gap-4">
+
+                <%= button_to toggle_task_path(task),
+                  method: :patch,
+                  class: "cursor-pointer" do %>
+
+                  <% if task.completed? %>
+                    <div class="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-sm font-bold text-white">
+                      ✓
+                    </div>
+                  <% else %>
+                    <div class="h-7 w-7 rounded-full border-2 border-slate-300 hover:border-purple-500"></div>
+                  <% end %>
+
+                <% end %>
+
+                <p class="<%= task.completed? ? "truncate text-slate-400 line-through" : "truncate font-medium text-slate-800" %>">
+                  <%= task.title %>
+                </p>
+
+              </div>
+
+              <div class="flex shrink-0 items-center gap-2">
+
+                <%= link_to "Edit",
+                  edit_task_path(task),
+                  class: "rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100" %>
+
+                <%= button_to "Delete",
+                  task_path(task),
+                  method: :delete,
+                  form: {
+                    data: {
+                      turbo_confirm: "Delete this task?"
+                    }
+                  },
+                  class: "cursor-pointer rounded-lg px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50" %>
+
+              </div>
+
+            </div>
+
+          <% end %>
+        </div>
+
+      <% else %>
+
+        <div class="px-6 py-16 text-center">
+          <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-50 text-xl">
+            ✓
+          </div>
+
+          <h2 class="font-semibold text-slate-900">
+            No tasks yet
+          </h2>
+
+          <p class="mt-1 text-sm text-slate-500">
+            Create your first task to get started.
+          </p>
+        </div>
+
+      <% end %>
+    </div>
+
+    <div class="mt-5 flex justify-between px-1 text-sm text-slate-500">
+      <span>
+        <%= pluralize(@tasks.count, "task") %>
+      </span>
+
+      <span>
+        <%= @tasks.where(completed: true).count %> completed
+      </span>
+    </div>
+
+  </div>
+</div>

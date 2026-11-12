@@ -42,3 +42,17 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+
+# Rails credentials keys
+/config/credentials/*.key
+
+# Database backups
+*.sql
+*.dump
+*.backup
+
+# Private SSH keys
+id_rsa
+id_ed25519
+*.pem
